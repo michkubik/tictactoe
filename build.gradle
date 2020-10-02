@@ -1,14 +1,27 @@
 plugins {
-    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+javafx {
+    version = "11.0.2"
+    modules = [ 'javafx.controls' ]
 }
 
 group 'com.kodilla'
 version '1.0-SNAPSHOT'
+mainClassName = 'com.kodilla.tictactoegame.game.TicTacToe'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.2'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.5.7'
+}
 
+test {
+    useJUnitPlatform()
 }
