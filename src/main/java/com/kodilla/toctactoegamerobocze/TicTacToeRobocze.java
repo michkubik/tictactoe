@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -14,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 
 public class TicTacToeRobocze extends Application {
@@ -25,8 +27,10 @@ public class TicTacToeRobocze extends Application {
     private javafx.scene.image.Image imageback = new Image("file:src/main/resources/galaxy-background.jpg");
 
     private Parent createContent() {
-        Pane root = new Pane();
-        root.setPrefSize(600, 600);
+        GridPane pane = new GridPane();
+
+        //Pane root = new Pane();
+        //root.setPrefSize(600, 600);
 
         for (int i = 0; i<3; i++) {
             for (int j = 0; j<3; j++) {
@@ -34,13 +38,14 @@ public class TicTacToeRobocze extends Application {
                 tile.setTranslateX(j * 200);
                 tile.setTranslateY(i * 200);
 
-                root.getChildren().add(tile);
+                pane.getChildren().add(tile);
+                //root.getChildren().add(tile);
                 tiles.add(tile);
                 board[i][j] = tile;
             }
         }
 
-        return root;
+        return pane;
     }
 
     @Override
@@ -91,6 +96,17 @@ public class TicTacToeRobocze extends Application {
             if (text.getText() == null || text.getText().isBlank()) {
                 text.setText("O");
                 isCross = !isCross;
+            }
+        }
+
+        public void computerMove() {
+            Random rand = new Random();
+            int move = rand.nextInt(9) + 1;
+            if (tiles.get(move).getText() == null) {
+                text.setText("O");
+                isCross = !isCross;
+            } else {
+                return;
             }
         }
 

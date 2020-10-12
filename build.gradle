@@ -10,7 +10,7 @@ javafx {
 
 group 'com.kodilla'
 version '1.0-SNAPSHOT'
-mainClassName = 'com.kodilla.toctactoegamerobocze.TicTacToeRobocze'
+mainClassName = 'com.kodilla.tictactoegame.TicTacToe'
 
 repositories {
     mavenCentral()
