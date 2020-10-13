@@ -24,9 +24,11 @@ public class TicTacToe extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Pane to hold cell
         GridPane pane = new GridPane();
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 pane.add(cell[i][j] = new Cell(), j, i);
+            }
+        }
 
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(pane);
@@ -46,7 +48,7 @@ public class TicTacToe extends Application {
 
         return true;
     }
-
+// uprościć sprawdzanie oparte na IF - algorytm(?)
     public boolean isWon(char token) {
         for (int i = 0; i < 3; i++)
             if (cell[i][0].getToken() == token
@@ -115,12 +117,16 @@ public class TicTacToe extends Application {
                 if (whoseTurn != 'X') {
                     Random randX = new Random();
                     Random randY = new Random();
-                    int cellX = randX.nextInt(2) + 1;
-                    int cellY = randY.nextInt(2) + 1;
-                    if (cell[cellX][cellY].getToken() == ' ') {
-                        cell[cellX][cellY].setToken(whoseTurn);
-                    } else {
-                        return;
+                    boolean isSet = false;
+                    while (!isSet) {
+                        int cellX = randX.nextInt(3);
+                        int cellY = randY.nextInt(3);
+                        System.out.println("X = " + cellX);
+                        System.out.println("Y = " + cellY);
+                        if (cell[cellX][cellY].getToken() == ' ') {
+                            cell[cellX][cellY].setToken(whoseTurn);
+                            isSet = true;
+                        }
                     }
                 }
                 else {
