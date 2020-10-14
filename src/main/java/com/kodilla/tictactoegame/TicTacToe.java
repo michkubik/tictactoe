@@ -1,7 +1,10 @@
 package com.kodilla.tictactoegame;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -19,9 +22,26 @@ public class TicTacToe extends Application {
     private Label label = new Label("X's turn to play");
     private Cell[][] cell =  new Cell[3][3];
 
+    Scene scene, startScene;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        //Button 1
+        Label label1 = new Label("Welcome to the Tic Tac Toe Game!");
+        Button button1 = new Button("Start a standard game");
+        button1.setOnAction(e -> primaryStage.setScene(scene));
+        Button buttonDifficult = new Button("Start a difficult game");
+        buttonDifficult.setOnAction(e -> AlertBox.display("Under construction", "Not ready yet. Sorry!"));
+
+        //Layout 1 - children laid out in vertical column
+        VBox layout1 = new VBox(20);
+        layout1.getChildren().addAll(label1, button1, buttonDifficult);
+        layout1.setAlignment(Pos.CENTER);
+        startScene = new Scene(layout1, 250, 200);
+
+
         // Pane to hold cell
         GridPane pane = new GridPane();
         for (int i = 0; i < 3; i++) {
@@ -33,10 +53,10 @@ public class TicTacToe extends Application {
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(pane);
         borderPane.setTop(label);
+        scene = new Scene(borderPane, 450, 450);
 
-        Scene scene = new Scene(borderPane, 450, 450);
-        primaryStage.setTitle("Tic Tax Toe"); // Set the stage title
-        primaryStage.setScene(scene); // Place the scene in the stage
+        primaryStage.setTitle("Tic Tac Toe"); // Set the stage title
+        primaryStage.setScene(startScene); // Place the scene in the stage
         primaryStage.show(); // Display the stage
     }
 
@@ -135,12 +155,12 @@ public class TicTacToe extends Application {
 
                 if (isWon(whoseTurn)) {
                     //label.setText(whoseTurn + " won! The game is over");
-                    AlertBox.display("End of Game", whoseTurn + " won! The game is over");
+                    AlertBox.display("End of Game", whoseTurn + " won! \nThe game is over");
                     whoseTurn = ' '; // Game is over
                 }
                 else if (isFull()) {
                     //label.setText("Draw! The game is over");
-                    AlertBox.display("End of Game", "Draw! The game is over");
+                    AlertBox.display("End of Game", "Draw! \nThe game is over");
                     whoseTurn = ' '; // Game is over
                 }
                 else {
