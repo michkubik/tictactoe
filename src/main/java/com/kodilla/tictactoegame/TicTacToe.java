@@ -134,11 +134,13 @@ public class TicTacToe extends Application {
                 }
 
                 if (isWon(whoseTurn)) {
-                    label.setText(whoseTurn + " won! The game is over");
+                    //label.setText(whoseTurn + " won! The game is over");
+                    AlertBox.display("End of Game", whoseTurn + " won! The game is over");
                     whoseTurn = ' '; // Game is over
                 }
                 else if (isFull()) {
-                    label.setText("Draw! The game is over");
+                    //label.setText("Draw! The game is over");
+                    AlertBox.display("End of Game", "Draw! The game is over");
                     whoseTurn = ' '; // Game is over
                 }
                 else {
