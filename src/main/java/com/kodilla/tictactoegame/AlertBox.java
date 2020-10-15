@@ -14,7 +14,7 @@ public class AlertBox {
         //Block events to other windows
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
-        window.setMinWidth(250);
+        window.setMinWidth(275);
         window.setMinHeight(150);
 
         Label label = new Label();
