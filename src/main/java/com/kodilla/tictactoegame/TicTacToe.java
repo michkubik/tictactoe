@@ -59,11 +59,17 @@ public class TicTacToe extends Application {
 
         Button closeButton = new Button("End game");
         closeButton.setOnAction(e -> primaryStage.close());
+        Button returnButton = new Button("Return to main menu");
+        returnButton.setOnAction(e -> primaryStage.setScene(startScene));
+
+        HBox downButtons = new HBox(20);
+        downButtons.getChildren().addAll(returnButton, closeButton);
+        downButtons.setAlignment(Pos.CENTER);
 
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(pane);
         borderPane.setTop(label);
-        borderPane.setBottom(closeButton);
+        borderPane.setBottom(downButtons);
 
 
         scene = new Scene(borderPane, 450, 450);
@@ -145,7 +151,7 @@ public class TicTacToe extends Application {
 
         private void handleMouseClick() {
             // If cell is empty and game is not over
-            if (token == ' ' && whoseTurn != ' ') {
+            if (token == ' ' && whoseTurn != ' ') { //jak zrobic, żeby móc klikać na pełnych polach też?
 
                 if (whoseTurn != 'X') {
                     Random randX = new Random();
@@ -162,6 +168,7 @@ public class TicTacToe extends Application {
                         }
                     }
                 }
+
                 else {
                     setToken(whoseTurn); // Set token in the cell
                 }
