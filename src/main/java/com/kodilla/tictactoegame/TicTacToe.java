@@ -28,25 +28,68 @@ public class TicTacToe extends Application {
     Scene scene, startScene;
 
 
+    public void cleanUp() {
+
+    }
+
+    public void startGame(Stage stage) {
+
+    }
+
+    public void restart(Stage stage) {
+        cleanUp();
+        startGame(stage);
+    }
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        //Button 1
-        Label label1 = new Label("Welcome to the Tic Tac Toe Game!");
+
+
         Button buttonStandardGame = new Button("Start a standard game");
+        buttonStandardGame.setMinWidth(140);
         buttonStandardGame.setOnAction(e -> primaryStage.setScene(scene));
         Button buttonDifficultGame = new Button("Start a difficult game");
+        buttonDifficultGame.setMinWidth(140);
         buttonDifficultGame.setOnAction(e -> AlertBox.display("Under construction", "Not ready yet. Sorry!"));
         Button buttonClose = new Button("Quit");
+        buttonClose.setMinWidth(140);
         buttonClose.setOnAction(e -> primaryStage.close());
 
 
-        //Layout 1 - children laid out in vertical column
-        VBox layout1 = new VBox(20);
-        layout1.setBackground(background);
-        layout1.getChildren().addAll(buttonStandardGame, buttonDifficultGame, buttonClose);
-        layout1.setAlignment(Pos.CENTER);
-        startScene = new Scene(layout1, 350, 300);
+
+        VBox startLayout = new VBox(20);
+        startLayout.setBackground(background);
+        startLayout.getChildren().addAll(buttonStandardGame, buttonDifficultGame, buttonClose);
+        startLayout.setAlignment(Pos.CENTER);
+        startScene = new Scene(startLayout, 450, 450);
+
+
+
+
+        Button closeButton = new Button("End game");
+        closeButton.setMinWidth(120);
+        closeButton.setOnAction(e -> primaryStage.close());
+        Button returnButton = new Button("Return to main menu");
+        returnButton.setMinWidth(120);
+        returnButton.setOnAction(e -> primaryStage.setScene(startScene));
+
+
+        HBox downButtons = new HBox(60);
+        downButtons.setMinHeight(40);
+        downButtons.getChildren().addAll(returnButton, closeButton);
+        downButtons.setAlignment(Pos.CENTER);
+
+        HBox topLabel = new HBox(60);
+        topLabel.setMinHeight(40);
+        label.setFont(Font.font(20));
+        topLabel.getChildren().add(label);
+        topLabel.setAlignment(Pos.CENTER);
+
+        BorderPane borderPane = new BorderPane();
+        scene = new Scene(borderPane, 450, 450);
+
 
 
         // Pane to hold cell
@@ -57,22 +100,12 @@ public class TicTacToe extends Application {
             }
         }
 
-        Button closeButton = new Button("End game");
-        closeButton.setOnAction(e -> primaryStage.close());
-        Button returnButton = new Button("Return to main menu");
-        returnButton.setOnAction(e -> primaryStage.setScene(startScene));
 
-        HBox downButtons = new HBox(20);
-        downButtons.getChildren().addAll(returnButton, closeButton);
-        downButtons.setAlignment(Pos.CENTER);
-
-        BorderPane borderPane = new BorderPane();
         borderPane.setCenter(pane);
-        borderPane.setTop(label);
+        borderPane.setTop(topLabel);
         borderPane.setBottom(downButtons);
 
 
-        scene = new Scene(borderPane, 450, 450);
 
         primaryStage.setTitle("Tic Tac Toe"); // Set the stage title
         primaryStage.setScene(startScene); // Place the scene in the stage
@@ -170,7 +203,7 @@ public class TicTacToe extends Application {
                 }
 
                 else {
-                    setToken(whoseTurn); // Set token in the cell
+                        setToken(whoseTurn); // Set token in the cell
                 }
 
                 if (isWon(whoseTurn)) {
