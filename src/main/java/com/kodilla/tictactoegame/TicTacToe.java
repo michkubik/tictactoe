@@ -196,6 +196,9 @@ public class TicTacToe extends Application {
     }
 
     public void cleanUp() {
+        this.cell = new Cell[3][3];
+        whoseTurn = 'X';
+        label = new Label("X's turn to play");
     }
 
     public void restart(Stage primaryStage) {
