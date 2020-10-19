@@ -11,52 +11,34 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-
 import java.util.Random;
 
 public class TicTacToe extends Application {
-    // Which player has a turn, initially it is the X player
     private char whoseTurn = 'X';
     private Label label = new Label("X's turn to play");
     private Cell[][] cell =  new Cell[3][3];
-
     private Image backImage = new Image("file:src/main/resources/galaxy-background.jpg");
-    BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-    BackgroundImage backgroundImage = new BackgroundImage(backImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-    Background background = new Background(backgroundImage);
+    private BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+    private BackgroundImage backgroundImage = new BackgroundImage(backImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+    private Background background = new Background(backgroundImage);
+    private Scene scene, startScene;
 
-    Scene scene, startScene;
-
-
-    public void cleanUp() {
-
-    }
-
-    public void startGame(Stage stage) {
-
-    }
-
-    public void restart(Stage stage) {
-        cleanUp();
-        startGame(stage);
-    }
-
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-
+    public void startGame(Stage primaryStage) {
 
         Button buttonStandardGame = new Button("Start a standard game");
         buttonStandardGame.setMinWidth(140);
-        buttonStandardGame.setOnAction(e -> primaryStage.setScene(scene));
+        buttonStandardGame.setOnAction(e -> {
+            restart(primaryStage);
+            primaryStage.setScene(scene);
+        });
+
         Button buttonDifficultGame = new Button("Start a difficult game");
         buttonDifficultGame.setMinWidth(140);
         buttonDifficultGame.setOnAction(e -> AlertBox.display("Under construction", "Not ready yet. Sorry!"));
+
         Button buttonClose = new Button("Quit");
         buttonClose.setMinWidth(140);
         buttonClose.setOnAction(e -> primaryStage.close());
-
 
 
         VBox startLayout = new VBox(20);
@@ -66,15 +48,12 @@ public class TicTacToe extends Application {
         startScene = new Scene(startLayout, 450, 450);
 
 
-
-
-        Button closeButton = new Button("End game");
-        closeButton.setMinWidth(120);
-        closeButton.setOnAction(e -> primaryStage.close());
         Button returnButton = new Button("Return to main menu");
         returnButton.setMinWidth(120);
         returnButton.setOnAction(e -> primaryStage.setScene(startScene));
-
+        Button closeButton = new Button("End game");
+        closeButton.setMinWidth(120);
+        closeButton.setOnAction(e -> primaryStage.close());
 
         HBox downButtons = new HBox(60);
         downButtons.setMinHeight(40);
@@ -90,9 +69,6 @@ public class TicTacToe extends Application {
         BorderPane borderPane = new BorderPane();
         scene = new Scene(borderPane, 450, 450);
 
-
-
-        // Pane to hold cell
         GridPane pane = new GridPane();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -100,16 +76,13 @@ public class TicTacToe extends Application {
             }
         }
 
-
         borderPane.setCenter(pane);
         borderPane.setTop(topLabel);
         borderPane.setBottom(downButtons);
 
-
-
-        primaryStage.setTitle("Tic Tac Toe"); // Set the stage title
-        primaryStage.setScene(startScene); // Place the scene in the stage
-        primaryStage.show(); // Display the stage
+        primaryStage.setTitle("Tic Tac Toe");
+        primaryStage.setScene(startScene);
+        primaryStage.show();
     }
 
     public boolean isFull() {
@@ -120,7 +93,7 @@ public class TicTacToe extends Application {
 
         return true;
     }
-// uprościć sprawdzanie oparte na IF - algorytm(?)
+    // uprościć sprawdzanie oparte na IF - algorytm(?)
     public boolean isWon(char token) {
         for (int i = 0; i < 3; i++)
             if (cell[i][0].getToken() == token
@@ -203,29 +176,37 @@ public class TicTacToe extends Application {
                 }
 
                 else {
-                        setToken(whoseTurn); // Set token in the cell
+                    setToken(whoseTurn); // Set token in the cell
                 }
 
                 if (isWon(whoseTurn)) {
-                    //label.setText(whoseTurn + " won! The game is over");
                     AlertBox.display("End of Game", whoseTurn + " won! \nThe game is over");
                     whoseTurn = ' '; // Game is over
                 }
                 else if (isFull()) {
-                    //label.setText("Draw! The game is over");
                     AlertBox.display("End of Game", "Draw! \nThe game is over");
                     whoseTurn = ' '; // Game is over
                 }
                 else {
-                    // Change the turn
                     whoseTurn = (whoseTurn == 'X') ? 'O' : 'X';
-                    // Display whose turn
                     label.setText(whoseTurn + "'s turn");
                 }
             }
         }
     }
 
+    public void cleanUp() {
+    }
+
+    public void restart(Stage primaryStage) {
+        cleanUp();
+        startGame(primaryStage);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        startGame(primaryStage);
+    }
 
     public static void main(String[] args) {
         launch(args);
